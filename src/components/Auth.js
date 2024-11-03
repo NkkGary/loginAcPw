@@ -1,11 +1,15 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-import './Auth.css';
+import React, { useState } from "react";
+import api from "../api"; // Use the configured axios instance
+import "./Auth.css";
 
 function Auth() {
   const [isRegistering, setIsRegistering] = useState(false);
-  const [formData, setFormData] = useState({ name: '', userID: '', password: '' });
-  const [message, setMessage] = useState(''); // State to store success/error messages
+  const [formData, setFormData] = useState({
+    name: "",
+    userID: "",
+    password: "",
+  });
+  const [message, setMessage] = useState(""); // State to store success/error messages
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -15,38 +19,52 @@ function Auth() {
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post('http://localhost:5000/api/auth/login', {
+      const res = await api.post("/auth/login", {
         userID: formData.userID,
         password: formData.password,
       });
-      setMessage('Login successful');
+      setMessage("Login successful");
       // Optionally save the token in localStorage for future requests
-      localStorage.setItem('token', res.data.token);
+      localStorage.setItem("token", res.data.token);
     } catch (error) {
-      setMessage(error.response.data.message || 'Login failed');
+      setMessage(error.response.data.message || "Login failed");
     }
   };
 
   const handleRegisterSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post('http://localhost:5000/api/auth/register', {
+      const res = await api.post("/auth/register", {
         name: formData.name,
         userID: formData.userID,
         password: formData.password,
       });
       setMessage(res.data.message); // Show success message
     } catch (error) {
-      setMessage(error.response.data.message || 'Registration failed');
+      let errMsg = ``;
+      if (error.response) {
+        // Handle known error from the server
+        console.error("Login failed:", error.response.data.message);
+        errMsg = `Error: ${error.response.data.message}`;
+      } else if (error.request) {
+        // The request was made, but no response was received
+        console.error("No response received:", error.request);
+        errMsg =
+          "No response from the server. Please check your network connection.";
+      } else {
+        // Something happened in setting up the request
+        console.error("Error setting up request:", error.message);
+        errMsg = `An error occurred: ${error.message}`;
+      }
+      setMessage(errMsg || "Registration failed");
     }
   };
 
   return (
     <div className="auth-container">
-      <h2>{isRegistering ? 'Register' : 'Login'} Page</h2>
-      
-      {message && <p className="message">{message}</p>} {/* Display success/error messages */}
-
+      <h2>{isRegistering ? "Register" : "Login"} Page</h2>
+      {message && <p className="message">{message}</p>}{" "}
+      {/* Display success/error messages */}
       {isRegistering ? (
         <form onSubmit={handleRegisterSubmit} className="auth-form">
           <div className="form-group">
@@ -82,7 +100,9 @@ function Auth() {
               required
             />
           </div>
-          <button type="submit" className="auth-button">Register</button>
+          <button type="submit" className="auth-button">
+            Register
+          </button>
         </form>
       ) : (
         <form onSubmit={handleLoginSubmit} className="auth-form">
@@ -108,12 +128,18 @@ function Auth() {
               required
             />
           </div>
-          <button type="submit" className="auth-button">Login</button>
+          <button type="submit" className="auth-button">
+            Login
+          </button>
         </form>
       )}
-
-      <p onClick={() => setIsRegistering(!isRegistering)} className="toggle-link">
-        {isRegistering ? 'Already have an account? Login' : "Don't have an account? Register"}
+      <p
+        onClick={() => setIsRegistering(!isRegistering)}
+        className="toggle-link"
+      >
+        {isRegistering
+          ? "Already have an account? Login"
+          : "Don't have an account? Register"}
       </p>
     </div>
   );
