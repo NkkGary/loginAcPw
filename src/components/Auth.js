@@ -24,10 +24,17 @@ function Auth() {
         password: formData.password,
       });
       setMessage("Login successful");
-      // Optionally save the token in localStorage for future requests
-      localStorage.setItem("token", res.data.token);
+      localStorage.setItem("token", res.data.token); // Save token
     } catch (error) {
-      setMessage(error.response.data.message || "Login failed");
+      let errMsg = "";
+      if (error.response) {
+        errMsg = error.response.data.message || "Login failed";
+      } else if (error.request) {
+        errMsg = "No response from the server. Please check your network connection.";
+      } else {
+        errMsg = `An error occurred: ${error.message}`;
+      }
+      setMessage(errMsg);
     }
   };
 
@@ -41,30 +48,22 @@ function Auth() {
       });
       setMessage(res.data.message); // Show success message
     } catch (error) {
-      let errMsg = ``;
+      let errMsg = "";
       if (error.response) {
-        // Handle known error from the server
-        console.error("Login failed:", error.response.data.message);
         errMsg = `Error: ${error.response.data.message}`;
       } else if (error.request) {
-        // The request was made, but no response was received
-        console.error("No response received:", error.request);
-        errMsg =
-          "No response from the server. Please check your network connection.";
+        errMsg = "No response from the server. Please check your network connection.";
       } else {
-        // Something happened in setting up the request
-        console.error("Error setting up request:", error.message);
         errMsg = `An error occurred: ${error.message}`;
       }
-      setMessage(errMsg || "Registration failed");
+      setMessage(errMsg);
     }
   };
 
   return (
     <div className="auth-container">
       <h2>{isRegistering ? "Register" : "Login"} Page</h2>
-      {message && <p className="message">{message}</p>}{" "}
-      {/* Display success/error messages */}
+      {message && <p className="message">{message}</p>} {/* Display success/error messages */}
       {isRegistering ? (
         <form onSubmit={handleRegisterSubmit} className="auth-form">
           <div className="form-group">
@@ -133,13 +132,8 @@ function Auth() {
           </button>
         </form>
       )}
-      <p
-        onClick={() => setIsRegistering(!isRegistering)}
-        className="toggle-link"
-      >
-        {isRegistering
-          ? "Already have an account? Login"
-          : "Don't have an account? Register"}
+      <p onClick={() => setIsRegistering(!isRegistering)} className="toggle-link">
+        {isRegistering ? "Already have an account? Login" : "Don't have an account? Register"}
       </p>
     </div>
   );
