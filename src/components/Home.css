@@ -1,0 +1,47 @@
+/* src/components/Home.css */
+
+.linktree-container {
+    text-align: center;
+    padding: 40px 20px;
+    font-family: 'Segoe UI', sans-serif;
+  }
+  
+  .profile-image {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 20px;
+    border: 2px solid #888;
+  }
+  
+  .username {
+    margin-bottom: 30px;
+    font-size: 1.5rem;
+    color: #333;
+  }
+  
+  .links {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+  
+  .link-button {
+    display: block;
+    padding: 15px;
+    background-color: #4CAF50;
+    color: white;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: bold;
+    transition: all 0.2s ease;
+  }
+  
+  .link-button:hover {
+    background-color: #45a049;
+    transform: scale(1.02);
+  }
+  
