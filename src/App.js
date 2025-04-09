@@ -10,10 +10,10 @@ function App() {
       <Navbar /> {/* Fixed Navbar included at the top */}
       <div className="container"> {/* Container for consistent padding */}
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/about" element={<About />} />
+          <Route path="home" element={<Home />} />
+          <Route path="about" element={<About />} />
           {/* <Route path="/contact" element={<Contact />} /> */}
-          <Route path="/auth" element={<Auth />} />
+          <Route path="auth" element={<Auth />} />
           <Route path="*" element={<NotFound />} /> {/* Fallback route for 404 */}
         </Routes>
       </div>

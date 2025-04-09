@@ -13,7 +13,7 @@ function Navbar() {
 
   return (
     <nav className="navbar">
-      <h1 className="navbar-title">LinkBoard</h1>
+      <h1 className="navbar-title"> </h1>
 
       {/* Hamburger icon for mobile */}
       <button className="menu-icon" onClick={toggleMobileMenu}>
@@ -24,19 +24,19 @@ function Navbar() {
       <div className={`sidebar ${isMobileMenuOpen ? 'open' : ''}`}>
         <button className="close-btn" onClick={toggleMobileMenu}>✕</button>
         <ul className="sidebar-links">
-          <li><Link to="/" onClick={toggleMobileMenu}>Home</Link></li>
-          <li><Link to="/about" onClick={toggleMobileMenu}>About</Link></li>
+          <li><Link to="home" onClick={toggleMobileMenu}>Home</Link></li>
+          <li><Link to="about" onClick={toggleMobileMenu}>About</Link></li>
           {/* <li><Link to="/contact" onClick={toggleMobileMenu}>Contact</Link></li> */}
-          <li><Link to="/auth" onClick={toggleMobileMenu}>Auth</Link></li>
+          <li><Link to="auth" onClick={toggleMobileMenu}>Auth</Link></li>
         </ul>
       </div>
 
       {/* Desktop navbar links */}
       <ul className="navbar-links">
-        <li><Link to="/">Home</Link></li>
-        <li><Link to="/about">About</Link></li>
-        {/* <li><Link to="/contact">Contact</Link></li> */}
-        <li><Link to="/auth">Auth</Link></li>
+        <li><Link to="home">Home</Link></li>
+        <li><Link to="about">About</Link></li>
+        {/* <li><Link to="contact">Contact</Link></li> */}
+        <li><Link to="auth">Auth</Link></li>
       </ul>
     </nav>
   );
