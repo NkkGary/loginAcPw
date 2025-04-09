@@ -9,11 +9,28 @@
     <script defer="defer" src="/loginAcPw/static/js/main.b03716c3.js"></script>
     <link href="/loginAcPw/static/css/main.4007e01b.css" rel="stylesheet">
     <script type="text/javascript">
-        window.location.hash || (window.location = window.location + "#/")
+        (function () {
+            const hasHash = window.location.hash;
+            const expectedStart = '/#/';
+            const currentURL = window.location.href;
 
-        if (!window.location.href.includes('loginAcPw/#')) {
-            window.location.href = 'https://nkkgary.github.io/loginAcPw/#/home';
-        }
+            if (!hasHash) {
+                window.location.replace(currentURL + '#/home');
+            }
+
+
+            // Fix 1: Make sure there's a `/` after the `#`
+            if (hasHash && !hasHash.startsWith('#/')) {
+                const correctedHash = '#/' + hasHash.slice(1); // turn '#home' into '#/home'
+                const newURL = window.location.href.replace(window.location.hash, correctedHash);
+                window.location.replace(newURL);
+            }
+
+            // Fix 2: Force correct base path for GitHub Pages or similar setups
+            if (!currentURL.includes('loginAcPw/#')) {
+                window.location.replace('https://nkkgary.github.io/loginAcPw/#/home');
+            }
+        })();
     </script>
 
 </head>
