@@ -1,1 +1,42 @@
-<!doctype html><html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><title>Account App</title><link rel="shortcut icon" href="/loginAcPw/favicon.ico"/><script type="text/javascript">window.location.hash||(window.location=window.location+"#/")</script><script defer="defer" src="/loginAcPw/static/js/main.b03716c3.js"></script><link href="/loginAcPw/static/css/main.4007e01b.css" rel="stylesheet"></head><body><noscript>You need to enable JavaScript to run this app.</noscript><div id="root"></div></body></html>
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Account App</title>
+    <link rel="shortcut icon" href="/loginAcPw/favicon.ico" />
+    <script defer="defer" src="/loginAcPw/static/js/main.b03716c3.js"></script>
+    <link href="/loginAcPw/static/css/main.4007e01b.css" rel="stylesheet">
+    <script type="text/javascript">
+        (function () {
+            const hasHash = window.location.hash;
+            const expectedStart = '/#/';
+            const currentURL = window.location.href;
+
+            if (!hasHash) {
+                window.location.replace(currentURL + '#/home');
+            }
+
+
+            // Fix 1: Make sure there's a `/` after the `#`
+            if (hasHash && !hasHash.startsWith('#/')) {
+                const correctedHash = '#/' + hasHash.slice(1); // turn '#home' into '#/home'
+                const newURL = window.location.href.replace(window.location.hash, correctedHash);
+                window.location.replace(newURL);
+            }
+
+            // Fix 2: Force correct base path for GitHub Pages or similar setups
+            if (!currentURL.includes('loginAcPw/#')) {
+                window.location.replace('https://nkkgary.github.io/loginAcPw/#/home');
+            }
+        })();
+    </script>
+
+</head>
+
+<body><noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root"></div>
+</body>
+
+</html>
