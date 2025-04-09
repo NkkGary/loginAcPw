@@ -13,7 +13,7 @@ function Navbar() {
 
   return (
     <nav className="navbar">
-      <h1 className="navbar-title">LinkBoard</h1>
+      <h1 className="navbar-title"> </h1>
 
       {/* Hamburger icon for mobile */}
       <button className="menu-icon" onClick={toggleMobileMenu}>
